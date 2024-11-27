@@ -1,0 +1,36 @@
+﻿@model DTO.ParticipacionDTO
+
+@{
+    ViewData["Title"] = "AgregarParticipacion";
+}
+
+<h1>Agregar participación</h1>
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-primary">
+        @ViewBag.Mensaje
+    </div>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AgregarParticipacion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="puntuacion" class="control-label">Puntuación</label>
+                <input asp-for="puntuacion" class="form-control" />
+                <span asp-validation-for="puntuacion" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="nombrePrueba" />
+            <input type="hidden" asp-for="idAtleta" />
+            <div class="form-group">
+                <input type="submit" value="Agregar" class="btn btn-primary mt-4" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

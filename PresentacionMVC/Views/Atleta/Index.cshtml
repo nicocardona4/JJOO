@@ -1,0 +1,65 @@
+﻿@using DTO
+@model IEnumerable<DTO.ListadoAtletasDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Listado de Atletas</h1>
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Disciplinas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pais)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        TempData["Disciplinas"] = item.Disciplinas;
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisciplinasComaSeparadas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pais)
+                </td>
+                <td>
+                    @Html.ActionLink("Asignar disciplina", "AsignarDisciplina", new { id = item.Id }) 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-controller="Evento" asp-action="Create" class="btn btn-primary mx-2">Crear evento</a>

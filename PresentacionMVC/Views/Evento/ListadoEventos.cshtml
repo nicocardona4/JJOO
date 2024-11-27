@@ -1,0 +1,51 @@
+﻿@using DTO
+@model PresentacionMVC.Models.ListadoEventosViewModel
+
+@{
+    ViewData["Title"] = "Listado de Eventos";
+}
+
+<h2>Buscar Eventos</h2>
+
+<hr />
+<form asp-action="ListadoEventos" method="post">
+    <div class="form-group">
+        <label asp-for="EventoFch.Fecha" class="control-label">Fecha</label>
+        <input asp-for="EventoFch.Fecha" type="date" class="form-control" />
+        <span asp-validation-for="EventoFch.Fecha" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Buscar" class="btn btn-primary my-4" />
+    </div>
+</form>
+
+@if (Model.cargado && Model.Eventos.Any())
+{
+    <h3>Eventos Encontrados</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Disciplina</th>
+                <th>Nombre de Prueba</th>
+                <th>Fecha Inicial</th>
+                <th>Fecha Final</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evento in Model.Eventos)
+            {
+                <tr>
+                    <td>@evento.Disciplina</td>
+                    <td>@evento.NombrePrueba</td>
+                    <td>@evento.FechaInicial</td>
+                    <td>@evento.FechaFinal</td>
+                    <td>@Html.ActionLink("Ver atletas", "VerAtletas", new {   nombrePrueba = evento.NombrePrueba})</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (Model.cargado)
+{
+    <p>No se encontraron eventos para la fecha ingresada.</p>
+}

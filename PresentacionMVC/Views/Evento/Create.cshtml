@@ -1,0 +1,67 @@
+﻿@model PresentacionMVC.Models.AltaEventoViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear evento</h1>
+
+<hr />
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-primary">
+        @ViewBag.Mensaje
+    </div>
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="EventoDTO.NombrePrueba" class="control-label"></label>
+                <input asp-for="EventoDTO.NombrePrueba" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="EventoDTO.FechaInicial" class="control-label"></label>
+                <input type="date" asp-for="EventoDTO.FechaInicial" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="EventoDTO.FechaFinal" class="control-label"></label>
+                <input type="date" asp-for="EventoDTO.FechaFinal" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="EventoDTO.DisciplinaId" class="control-label"></label>
+                <select asp-for="EventoDTO.DisciplinaId" class="form-control">
+                    @foreach (var item in Model.ListadoDisciplinasDTO)
+                    {
+                        <option value="@item.Id">@item.Nombre</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EventoDTO.IdAtletas" class="control-label"></label>
+                <select asp-for="EventoDTO.IdAtletas" class="form-control" multiple>
+                    @if (Model.atletas != null){ 
+                    foreach (var item in Model.atletas)
+                    {
+                        var nombreCompleto = item.Nombre + ' ' + item.Apellido;
+
+                        <option value="@item.Id">@nombreCompleto</option>
+                    }
+                    }
+                </select>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group d-flex justify-content-center ">
+                <input type="submit" value="Crear" class="btn btn-primary mx-2 mt-2" />
+                <a asp-controller="Atleta" asp-action="Index" class="btn btn-primary mx-2 mt-2">Ver Atletas</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

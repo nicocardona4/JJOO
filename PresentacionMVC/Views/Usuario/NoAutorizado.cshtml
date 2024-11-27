@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "No Autorizado";
+}
+
+
+<div class="text-center mt-5">
+    <h1 class="display-4 text-danger">Acceso Denegado</h1>
+    <p class="lead mt-3">No tienes permisos para acceder a esta sección.</p>
+    @if (string.IsNullOrEmpty(Context.Session.GetString("Rol")))
+    {
+        <a class="btn btn-secondary mt-3" asp-controller="Usuario" asp-action="Login">Iniciar Sesión</a>
+    }
+</div>
+
